@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
 import { et } from "date-fns/locale";
 import { StartConversationButton } from "@/components/chat/start-conversation-button";
+import { NextPage } from "next";
 
 interface ListingPageProps {
   params: {
@@ -16,7 +17,7 @@ interface ListingPageProps {
   };
 }
 
-export default async function ListingPage({ params }: ListingPageProps) {
+const ListingPage: NextPage<ListingPageProps> = async ({ params }) => {
   const listingId = params.id;
   const cookieStore = cookies();
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
@@ -110,4 +111,6 @@ export default async function ListingPage({ params }: ListingPageProps) {
       </Card>
     </div>
   );
-}
+};
+
+export default ListingPage;
