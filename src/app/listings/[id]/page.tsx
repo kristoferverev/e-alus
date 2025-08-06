@@ -8,10 +8,16 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
 import { et } from "date-fns/locale";
-import StartConversationButton from "@/components/chat/start-conversation-button";
+import { StartConversationButton } from "@/components/chat/start-conversation-button";
 
-export default async function ListingPage(props: any) {
-  const listingId = props.params.id;
+interface ListingPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function ListingPage({ params }: ListingPageProps) {
+  const listingId = params.id;
   const cookieStore = cookies();
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
 
@@ -82,7 +88,10 @@ export default async function ListingPage(props: any) {
                 </div>
                 <div>
                   <h3 className="font-semibold">Hind</h3>
-                  <p>{listing.price_per_unit} €/tk</p>
+                  <p>
+                    {listing.price} €
+                    {listing.price_per_piece ? '/tk' : ' (kokku)'}
+                  </p>
                 </div>
               </div>
               <div>
